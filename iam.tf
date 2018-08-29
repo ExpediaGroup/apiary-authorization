@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2018 Expedia Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ */
+
 resource "aws_iam_role" "ranger_task_exec" {
   name = "ranger-ecs-task-exec-${var.aws_region}"
 
@@ -18,7 +24,7 @@ resource "aws_iam_role" "ranger_task_exec" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "task_exec_managed" {
+resource "aws_iam_role_policy_attachment" "ranger_task_exec_policy" {
   role       = "${aws_iam_role.ranger_task_exec.id}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
