@@ -86,5 +86,5 @@ resource "aws_route53_record" "ranger_database" {
   name    = "ranger-database"
   type    = "CNAME"
   ttl     = "60"
-  records = [ "${aws_rds_cluster.ranger_cluster.endpoint}" ]
+  records = ["${aws_rds_cluster.ranger_cluster.endpoint}"]
 }

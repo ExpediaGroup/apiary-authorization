@@ -99,7 +99,8 @@ resource "aws_ecs_service" "ranger_service" {
     container_name   = "ranger-admin"
     container_port   = 6080
   }
-  depends_on = [ "aws_lb_target_group.ranger_admin_tg", "aws_rds_cluster_instance.ranger_cluster_instance" ]
+
+  depends_on = ["aws_lb_target_group.ranger_admin_tg", "aws_rds_cluster_instance.ranger_cluster_instance"]
 }
 
 resource "aws_lb" "ranger_admin_lb" {
@@ -132,7 +133,7 @@ resource "aws_lb_target_group" "ranger_admin_tg" {
   slow_start  = 900
 
   stickiness {
-    type = "lb_cookie"
+    type    = "lb_cookie"
     enabled = true
   }
 
@@ -145,7 +146,8 @@ resource "aws_lb_target_group" "ranger_admin_tg" {
     matcher             = 200
     path                = "/login.jsp"
   }
-  depends_on  = ["aws_lb.ranger_admin_lb"]
+
+  depends_on = ["aws_lb.ranger_admin_lb"]
 }
 
 data "vault_generic_secret" "ranger_admin_cert" {
@@ -220,5 +222,6 @@ resource "aws_ecs_service" "ranger_usersync" {
     security_groups = ["${aws_security_group.ranger_usersync.id}"]
     subnets         = ["${var.private_subnets}"]
   }
-  depends_on = [ "aws_ecs_service.ranger_service" ]
+
+  depends_on = ["aws_ecs_service.ranger_service"]
 }
