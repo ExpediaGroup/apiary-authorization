@@ -22,6 +22,8 @@ resource "aws_iam_role" "ranger_task_exec" {
   ]
 }
 EOF
+
+  tags = "${var.apiary_tags}"
 }
 
 resource "aws_iam_role_policy_attachment" "ranger_task_exec_policy" {
@@ -47,4 +49,6 @@ resource "aws_iam_role" "ranger_task" {
   ]
 }
 EOF
+
+  tags = "${var.apiary_tags}"
 }

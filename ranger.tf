@@ -6,6 +6,7 @@
 
 resource "aws_ecs_cluster" "ranger" {
   name = "ranger"
+  tags = "${var.apiary_tags}"
 }
 
 resource "aws_cloudwatch_log_group" "ranger" {
@@ -26,6 +27,7 @@ resource "aws_ecs_task_definition" "ranger_admin" {
   cpu                      = "${var.ranger_admin_task_cpu}"
   requires_compatibilities = ["EC2", "FARGATE"]
   container_definitions    = "${data.template_file.ranger_admin.rendered}"
+  tags = "${var.apiary_tags}"
 }
 
 resource "aws_security_group" "ranger_admin" {
@@ -131,6 +133,7 @@ resource "aws_lb_target_group" "ranger_admin_tg" {
   vpc_id      = "${var.vpc_id}"
   target_type = "ip"
   slow_start  = 900
+  tags        = "${var.apiary_tags}"
 
   stickiness {
     type    = "lb_cookie"
@@ -209,6 +212,7 @@ resource "aws_ecs_task_definition" "ranger_usersync" {
   cpu                      = "${var.ranger_usersync_task_cpu}"
   requires_compatibilities = ["EC2", "FARGATE"]
   container_definitions    = "${data.template_file.ranger_usersync.rendered}"
+  tags                     = "${var.apiary_tags}"
 }
 
 resource "aws_ecs_service" "ranger_usersync" {
