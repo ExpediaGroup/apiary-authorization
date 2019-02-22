@@ -11,10 +11,6 @@ resource "aws_db_subnet_group" "ranger" {
   tags        = "${var.apiary_tags}"
 }
 
-data "vault_generic_secret" "ranger_db_master_user" {
-  path = "${local.vault_path}/ranger_db_master_user"
-}
-
 resource "aws_security_group" "ranger_db" {
   name   = "ranger-db"
   vpc_id = "${var.vpc_id}"
@@ -48,11 +44,16 @@ resource "random_id" "snapshot_id" {
   byte_length = 8
 }
 
+resource "random_string" "db_master_password" {
+  length  = 16
+  special = false
+}
+
 resource "aws_rds_cluster" "ranger_cluster" {
   cluster_identifier                  = "ranger-cluster"
   database_name                       = "${var.ranger_database_name}"
-  master_username                     = "${data.vault_generic_secret.ranger_db_master_user.data["username"]}"
-  master_password                     = "${data.vault_generic_secret.ranger_db_master_user.data["password"]}"
+  master_username                     = "${var.db_master_username}"
+  master_password                     = "${random_string.db_master_password.result}"
   backup_retention_period             = "${var.ranger_db_backup_retention}"
   preferred_backup_window             = "${var.ranger_db_backup_window}"
   preferred_maintenance_window        = "${var.ranger_db_maintenance_window}"
@@ -61,6 +62,7 @@ resource "aws_rds_cluster" "ranger_cluster" {
   tags                                = "${var.apiary_tags}"
   final_snapshot_identifier           = "ranger-cluster-final-${random_id.snapshot_id.hex}"
   iam_database_authentication_enabled = true
+  apply_immediately                   = true
 
   lifecycle {
     create_before_destroy = true

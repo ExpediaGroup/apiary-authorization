@@ -52,3 +52,19 @@ EOF
 
   tags = "${var.apiary_tags}"
 }
+
+resource "aws_iam_role_policy" "secretsmanager_for_ranger_task" {
+  name = "secretsmanager"
+  role = "${aws_iam_role.ranger_task.id}"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Effect": "Allow",
+        "Action": "secretsmanager:GetSecretValue",
+        "Resource": [ "${join("\",\"",concat(aws_secretsmanager_secret.db_master_user.*.arn,aws_secretsmanager_secret.db_audit_user.*.arn,aws_secretsmanager_secret.ranger_admin.*.arn,data.aws_secretsmanager_secret.ldap_user.*.arn))}" ]
+    }
+}
+EOF
+}

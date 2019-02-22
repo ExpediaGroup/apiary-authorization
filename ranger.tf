@@ -14,10 +14,6 @@ resource "aws_cloudwatch_log_group" "ranger" {
   tags = "${var.apiary_tags}"
 }
 
-data "vault_generic_secret" "ranger_admin" {
-  path = "${local.vault_path}/ranger_admin"
-}
-
 resource "aws_ecs_task_definition" "ranger_admin" {
   family                   = "ranger-admin"
   task_role_arn            = "${aws_iam_role.ranger_task.arn}"
@@ -27,7 +23,7 @@ resource "aws_ecs_task_definition" "ranger_admin" {
   cpu                      = "${var.ranger_admin_task_cpu}"
   requires_compatibilities = ["EC2", "FARGATE"]
   container_definitions    = "${data.template_file.ranger_admin.rendered}"
-  tags = "${var.apiary_tags}"
+  tags                     = "${var.apiary_tags}"
 }
 
 resource "aws_security_group" "ranger_admin" {
@@ -153,14 +149,9 @@ resource "aws_lb_target_group" "ranger_admin_tg" {
   depends_on = ["aws_lb.ranger_admin_lb"]
 }
 
-data "vault_generic_secret" "ranger_admin_cert" {
-  path = "${local.vault_path}/${aws_route53_record.ranger_admin.fqdn}"
-}
-
-resource "aws_iam_server_certificate" "ranger_admin" {
-  name             = "ranger-admin"
-  certificate_body = "${data.vault_generic_secret.ranger_admin_cert.data["crt"]}"
-  private_key      = "${data.vault_generic_secret.ranger_admin_cert.data["pem"]}"
+data "aws_iam_server_certificate" "ranger_admin" {
+  name   = "${aws_route53_record.ranger_admin.fqdn}"
+  latest = true
 }
 
 resource "aws_lb_listener" "ranger_http_listener" {
@@ -184,7 +175,7 @@ resource "aws_lb_listener" "ranger_https_listener" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2015-05"
-  certificate_arn   = "${aws_iam_server_certificate.ranger_admin.arn}"
+  certificate_arn   = "${data.aws_iam_server_certificate.ranger_admin.arn}"
 
   default_action {
     target_group_arn = "${aws_lb_target_group.ranger_admin_tg.arn}"

@@ -9,22 +9,6 @@ variable "apiary_tags" {
   type        = "map"
 }
 
-variable "vault_addr" {
-  description = "Address of vault server for secrets"
-  type        = "string"
-}
-
-variable "vault_internal_addr" {
-  description = "Address of vault server for secrets"
-  type        = "string"
-}
-
-variable "vault_path" {
-  description = "Path to apiary secrets in vault"
-  type        = "string"
-  default     = ""
-}
-
 variable "ranger_domain_name" {
   description = "Route 53 domain name to register ranger-admin cname"
   type        = "string"
@@ -49,6 +33,28 @@ variable "ranger_database_name" {
   description = "Database name to create in RDS for Apiary"
   type        = "string"
   default     = "ranger"
+}
+
+variable "db_master_username" {
+  description = "Aurora cluster MySQL master user name."
+  type        = "string"
+  default     = "ranger"
+}
+
+variable "db_audit_username" {
+  description = "Ranger DB Audit user name."
+  type        = "string"
+  default     = "rangerlogger"
+}
+
+variable "ldap_secret_name" {
+  description = "Active directory LDAP bind DN SecretsManager secret name."
+  type        = "string"
+}
+
+variable "ldap_ca_cert" {
+  description = "Base64 encoded Certificate Authority bundle to validate LDAPS connections."
+  type        = "string"
 }
 
 variable "ranger_db_additional_sg" {
