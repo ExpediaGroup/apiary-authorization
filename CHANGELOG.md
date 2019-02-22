@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ## [Unreleased]
 
 ### Added
+- Migrate from Vault to AWS Secrets Manager - see [#6](https://github.com/ExpediaInc/apiary-authorization/issues/6).
 - tag resources that were not yet applying tags - see [#4](https://github.com/ExpediaInc/apiary-authorization/issues/4).
 
 ## [1.0.0] - 2018-10-31
