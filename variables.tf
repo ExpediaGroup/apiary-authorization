@@ -112,13 +112,13 @@ variable "ranger_admin_instance_count" {
 variable "ranger_admin_task_memory" {
   description = "ranger admin container memory value, valid values: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html."
   type        = "string"
-  default     = "4096"
+  default     = "8192"
 }
 
 variable "ranger_admin_task_cpu" {
   description = "ranger admin container cpu value, valid values https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html"
   type        = "string"
-  default     = "512"
+  default     = "1024"
 }
 
 variable "ranger_admin_loglevel" {
