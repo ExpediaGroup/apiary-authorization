@@ -36,20 +36,28 @@ data "template_file" "ranger_admin" {
         "value": "${var.aws_region}"
      },
      {
-        "name": "VAULT_ADDR",
-        "value": "${var.vault_internal_addr}"
-     },
-     {
-        "name": "vault_path",
-        "value": "${local.vault_path}"
-     },
-     {
         "name": "db_host",
         "value": "${aws_rds_cluster.ranger_cluster.endpoint}"
      },
      {
         "name": "db_name",
         "value": "${aws_rds_cluster.ranger_cluster.database_name}"
+     },
+     {
+        "name": "db_master_user_arn",
+        "value": "${aws_secretsmanager_secret.db_master_user.arn}"
+     },
+     {
+        "name": "db_audit_user_arn",
+        "value": "${aws_secretsmanager_secret.db_audit_user.arn}"
+     },
+     {
+        "name": "ranger_admin_arn",
+        "value": "${aws_secretsmanager_secret.ranger_admin.arn}"
+     },
+     {
+        "name": "ldap_user_arn",
+        "value": "${data.aws_secretsmanager_secret.ldap_user.arn}"
      },
      {
         "name": "xa_ldap_ad_url",
@@ -66,6 +74,10 @@ data "template_file" "ranger_admin" {
      {
         "name": "xa_ldap_ad_domain",
         "value": "${var.ldap_domain}"
+     },
+     {
+        "name": "ldap_ca_cert",
+        "value": "${var.ldap_ca_cert}"
      },
      {
         "name": "LOGLEVEL",
@@ -103,12 +115,12 @@ data "template_file" "ranger_usersync" {
         "value": "${var.aws_region}"
      },
      {
-        "name": "VAULT_ADDR",
-        "value": "${var.vault_internal_addr}"
+        "name": "ranger_admin_arn",
+        "value": "${aws_secretsmanager_secret.ranger_admin.arn}"
      },
      {
-        "name": "vault_path",
-        "value": "${local.vault_path}"
+        "name": "ldap_user_arn",
+        "value": "${data.aws_secretsmanager_secret.ldap_user.arn}"
      },
      {
         "name": "POLICY_MGR_URL",
@@ -150,6 +162,10 @@ data "template_file" "ranger_usersync" {
      {
         "name": "GROUP_BASED_ROLE_ASSIGNMENT_RULES",
         "value": "${ var.ranger_admin_ldap_groups == "" ? "" : "\\\\&ROLE_SYS_ADMIN:g:${var.ranger_admin_ldap_groups}" }"
+     },
+     {
+        "name": "ldap_ca_cert",
+        "value": "${var.ldap_ca_cert}"
      },
      {
         "name": "LOGLEVEL",

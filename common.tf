@@ -1,7 +1,3 @@
-locals {
-  vault_path = "${ var.vault_path == "" ? format("secret/apiary-ranger-%s",var.aws_region) : var.vault_path }"
-}
-
 data "aws_vpc" "apiary_vpc" {
   id = "${var.vpc_id}"
 }
