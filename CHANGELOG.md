@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Added
 - Migrate from Vault to AWS Secrets Manager - see [#6](https://github.com/ExpediaInc/apiary-authorization/issues/6).
+  This is is backward incompatible change, adds new variables ldap_ca_cert, ldap_secret_name, check README for usage.
 - tag resources that were not yet applying tags - see [#4](https://github.com/ExpediaInc/apiary-authorization/issues/4).
 
 ## [1.0.0] - 2018-10-31
