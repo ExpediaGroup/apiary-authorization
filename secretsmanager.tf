@@ -6,6 +6,7 @@
 
 resource "aws_secretsmanager_secret" "db_master_user" {
   name = "ranger-db-master-user"
+  tags = "${var.apiary_tags}"
 }
 
 resource "aws_secretsmanager_secret_version" "db_master_user" {
@@ -20,6 +21,7 @@ resource "random_string" "db_audit_password" {
 
 resource "aws_secretsmanager_secret" "db_audit_user" {
   name = "ranger-db-audit-user"
+  tags = "${var.apiary_tags}"
 }
 
 resource "aws_secretsmanager_secret_version" "db_audit_user_user" {
@@ -49,6 +51,7 @@ resource "random_string" "keyadmin_password" {
 
 resource "aws_secretsmanager_secret" "ranger_admin" {
   name = "ranger-admin"
+  tags = "${var.apiary_tags}"
 }
 
 resource "aws_secretsmanager_secret_version" "ranger_admin" {
