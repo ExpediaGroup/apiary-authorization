@@ -3,11 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0] - 2019-02-26
 
 ### Added
-- Migrate from Vault to AWS Secrets Manager - see [#6](https://github.com/ExpediaInc/apiary-authorization/issues/6).
-  This is is backward incompatible change, adds new variables ldap_ca_cert, ldap_secret_name, check README for usage.
+- Migrate from Vault to AWS Secrets Manager - see [#6](https://github.com/ExpediaInc/apiary-authorization/issues/6).<br>
+This is is backward incompatible change, adds new variables `ldap_ca_cert`, `ldap_secret_name`, check [README.md](README.md) for usage.
 
 ## [1.0.1] - 2019-02-22
 
