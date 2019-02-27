@@ -3,6 +3,45 @@
 
 For more information please refer to the main [Apiary](https://github.com/ExpediaInc/apiary) project page.
 
+# Variables
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| apiary_tags | Common tags that get put on all resources | map | - | yes |
+| audit_solr_urls | ranger solr audit provider configuration,if not configured, defaults to db audit configuration | string | `` | no |
+| aws_region | aws region | string | - | yes |
+| db_audit_username | Ranger DB Audit user name. | string | `rangerlogger` | no |
+| db_master_username | Aurora cluster MySQL master user name. | string | `ranger` | no |
+| ldap_base | active directory ldap base dn | string | - | yes |
+| ldap_ca_cert | Base64 encoded Certificate Authority bundle to validate LDAPS connections. | string | - | yes |
+| ldap_domain | active directory ldap domain | string | `` | no |
+| ldap_group_base | active directory ldap base dn to search for groups | string | - | yes |
+| ldap_secret_name | Active directory LDAP bind DN SecretsManager secret name. | string | - | yes |
+| ldap_sync_interval | ranger usersync interval | string | `120` | no |
+| ldap_url | active directory ldap url to configure hadoop LDAP group mapping | string | - | yes |
+| ldap_user_base | active directory ldap base dn to search for users | string | - | yes |
+| private_subnets | ranger admin subnets | list | - | yes |
+| ranger_admin_ingress_cidr | ranger admin ingress cidr list | list | - | yes |
+| ranger_admin_instance_count | desired count of the ranger admin service | string | `2` | no |
+| ranger_admin_ldap_groups | csv active directory groups to grant ROLE_SYS_ADMIN privileges | string | `` | no |
+| ranger_admin_loglevel | ranger admin process loglevel,supports log4j values | string | `info` | no |
+| ranger_admin_task_cpu | ranger admin container cpu value, valid values https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html | string | `1024` | no |
+| ranger_admin_task_memory | ranger admin container memory value, valid values: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html. | string | `8192` | no |
+| ranger_database_name | Database name to create in RDS for Apiary | string | `ranger` | no |
+| ranger_db_additional_sg | Comma-seperated string for additional security groups to attach to RDS | list | `<list>` | no |
+| ranger_db_backup_retention | The days to retain backups for, for the rds metastore. | string | `7` | no |
+| ranger_db_backup_window | preferred backup window for rds metastore database in UTC. | string | `02:00-03:00` | no |
+| ranger_db_ingress_cidr | ranger db ingress cidr list | list | - | yes |
+| ranger_db_instance_class | instance type for the rds metastore | string | `db.t2.medium` | no |
+| ranger_db_instance_count | desired count of database cluster instances | string | `2` | no |
+| ranger_db_maintenance_window | preferred maintenance window for rds metastore database in UTC. | string | `wed:03:00-wed:04:00` | no |
+| ranger_docker_image | docker image id for ranger | string | - | yes |
+| ranger_docker_version | version of the docker image for ranger | string | - | yes |
+| ranger_domain_name | Route 53 domain name to register ranger-admin cname | string | - | yes |
+| ranger_usersync_loglevel | ranger usersync process loglevel,supports log4j values | string | `info` | no |
+| ranger_usersync_task_cpu | ranger usersync container cpu value, valid values https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html | string | `512` | no |
+| ranger_usersync_task_memory | ranger usersync container memory value, valid values: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html. | string | `4096` | no |
+| vpc_id | VPC id | string | - | yes |
+
 ## Usage
 
 Example module invocation:
@@ -44,7 +83,7 @@ aws iam upload-server-certificate --server-certificate-name ranger-admin.mydomai
 # Contact
 
 ## Mailing List
-If you would like to ask any questions about or discuss Apiary please join our mailing list at 
+If you would like to ask any questions about or discuss Apiary please join our mailing list at
 
   [https://groups.google.com/forum/#!forum/apiary-user](https://groups.google.com/forum/#!forum/apiary-user)
 
