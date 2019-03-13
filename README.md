@@ -11,6 +11,7 @@ For more information please refer to the main [Apiary](https://github.com/Expedi
 | aws_region | aws region | string | - | yes |
 | db_audit_username | Ranger DB Audit user name. | string | `rangerlogger` | no |
 | db_master_username | Aurora cluster MySQL master user name. | string | `ranger` | no |
+| docker_registry_auth_secret_name | Docker Registry authentication SecretManager secret name. | string | `` | no |
 | ldap_base | active directory ldap base dn | string | - | yes |
 | ldap_ca_cert | Base64 encoded Certificate Authority bundle to validate LDAPS connections. | string | - | yes |
 | ldap_domain | active directory ldap domain | string | `` | no |

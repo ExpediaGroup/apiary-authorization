@@ -4,12 +4,17 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
+locals {
+  docker_auth = "${ var.docker_registry_auth_secret_name == "" ? "" : format("\"repositoryCredentials\" :{\n \"credentialsParameter\":\"%s\"\n},",join("\",\"",concat(data.aws_secretsmanager_secret.docker_registry.*.arn)))}"
+}
+
 data "template_file" "ranger_admin" {
   template = <<EOF
 [
   {
     "name": "ranger-admin",
     "image": "${var.ranger_docker_image}:${var.ranger_docker_version}",
+    "${local.docker_auth}"
     "command": [ "/start-ranger-admin.sh" ],
     "essential": true,
     "logConfiguration": {
