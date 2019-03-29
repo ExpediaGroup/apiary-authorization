@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ## [Unreleased]
 
 ### Added
-- Support for docker private registry - see [#10](https://github.com/ExpediaInc/apiary-authorization/issues/10).
+- Support for Docker private registry - see [#10](https://github.com/ExpediaInc/apiary-authorization/issues/10).
 
 ## [2.0.1] - 2019-03-12
 
