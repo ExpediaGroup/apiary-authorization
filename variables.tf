@@ -198,3 +198,9 @@ variable "ranger_admin_ldap_groups" {
   type        = "string"
   default     = ""
 }
+
+variable "docker_registry_auth_secret_name" {
+  description = "Docker Registry authentication SecretManager secret name."
+  type        = "string"
+  default     = ""
+}
