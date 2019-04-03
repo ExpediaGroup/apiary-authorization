@@ -100,6 +100,7 @@ data "template_file" "ranger_usersync" {
   {
     "name": "ranger-usersync",
     "image": "${var.ranger_docker_image}:${var.ranger_docker_version}",
+    "${local.docker_auth}"
     "command": [ "/start-ranger-usersync.sh" ],
     "essential": true,
     "logConfiguration": {
