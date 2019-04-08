@@ -1,7 +1,7 @@
 
 # Overview
 
-For more information please refer to the main [Apiary](https://github.com/ExpediaInc/apiary) project page.
+For more information please refer to the main [Apiary](https://github.com/ExpediaGroup/apiary) project page.
 
 # Variables
 | Name | Description | Type | Default | Required |
@@ -48,7 +48,7 @@ For more information please refer to the main [Apiary](https://github.com/Expedi
 Example module invocation:
 ```
 module "apiary-authorization" {
-  source            = "git::https://github.com/ExpediaInc/apiary-authorization.git?ref=master"
+  source            = "git::https://github.com/ExpediaGroup/apiary-authorization.git?ref=master"
   aws_region        = "us-west-2"
   vpc_id            = "vpc-1"
   private_subnets   = ["subnet-1", "subnet-2"]
@@ -91,4 +91,4 @@ If you would like to ask any questions about or discuss Apiary please join our m
 # Legal
 This project is available under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
 
-Copyright 2018 Expedia Inc.
+Copyright 2018-2019 Expedia, Inc.
