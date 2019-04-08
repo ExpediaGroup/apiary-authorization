@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ## [2.1.0] - 2019-04-03
 
 ### Added
-- Support for Docker private registry - see [#10](https://github.com/ExpediaInc/apiary-authorization/issues/10).
+- Support for Docker private registry - see [#10](https://github.com/ExpediaGroup/apiary-authorization/issues/10).
 
 ## [2.0.1] - 2019-03-12
 
@@ -17,17 +17,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ## [2.0.0] - 2019-02-27
 
 ### Added
-- Migrate from Vault to AWS Secrets Manager - see [#6](https://github.com/ExpediaInc/apiary-authorization/issues/6).  
+- Migrate from Vault to AWS Secrets Manager - see [#6](https://github.com/ExpediaGroup/apiary-authorization/issues/6).  
 This is a backwards incompatible change, adds new variables `ldap_ca_cert`, `ldap_secret_name`, please refer to the [README.md](README.md) for usage.
 
 ## [1.0.1] - 2019-02-22
 
 ### Added
-- Tag resources that were not yet applying tags - see [#4](https://github.com/ExpediaInc/apiary-authorization/issues/4).
+- Tag resources that were not yet applying tags - see [#4](https://github.com/ExpediaGroup/apiary-authorization/issues/4).
 
 ## [1.0.0] - 2018-10-31
 ### Added
-- initial terraform: See [#1](https://github.com/ExpediaInc/apiary-authorization/issues/1)
+- initial terraform: See [#1](https://github.com/ExpediaGroup/apiary-authorization/issues/1)
 - Aurora database for storing ranger configs and audit logs
 - ranger admin service HA configuration with sticky sessions.
 - ranger usersync service to sync ldap users and groups from Active Directory
