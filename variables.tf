@@ -10,9 +10,22 @@ variable "apiary_tags" {
 }
 
 variable "ranger_domain_name" {
-  description = "Route 53 domain name to register ranger-admin cname"
+  description = "Route 53 domain name to register ranger-admin CNAME"
   type        = "string"
 }
+
+variable "ranger_database_host" {
+  description = "Route 53 host name for Ranger database CNAME - defaults to 'ranger-database'"
+  type        = "string"
+  default     = "ranger-database"
+}
+
+variable "ranger_admin_host" {
+  description = "Route 53 host name for Ranger admin UI CNAME - defaults to 'ranger-admin'"
+  type        = "string"
+  default     = "ranger-admin"
+}
+
 
 variable "vpc_id" {
   description = "VPC id"
