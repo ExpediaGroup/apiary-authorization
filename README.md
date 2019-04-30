@@ -21,12 +21,14 @@ For more information please refer to the main [Apiary](https://github.com/Expedi
 | ldap_url | active directory ldap url to configure hadoop LDAP group mapping | string | - | yes |
 | ldap_user_base | active directory ldap base dn to search for users | string | - | yes |
 | private_subnets | ranger admin subnets | list | - | yes |
+| ranger_admin_host | Route 53 host name for Ranger admin UI CNAME | string | `ranger-admin` | no |
 | ranger_admin_ingress_cidr | ranger admin ingress cidr list | list | - | yes |
 | ranger_admin_instance_count | desired count of the ranger admin service | string | `2` | no |
 | ranger_admin_ldap_groups | csv active directory groups to grant ROLE_SYS_ADMIN privileges | string | `` | no |
 | ranger_admin_loglevel | ranger admin process loglevel,supports log4j values | string | `info` | no |
 | ranger_admin_task_cpu | ranger admin container cpu value, valid values https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html | string | `1024` | no |
 | ranger_admin_task_memory | ranger admin container memory value, valid values: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html. | string | `8192` | no |
+| ranger_database_host | Route 53 host name for Ranger database CNAME | string | `ranger-database` | no |
 | ranger_database_name | Database name to create in RDS for Apiary | string | `ranger` | no |
 | ranger_db_additional_sg | Comma-seperated string for additional security groups to attach to RDS | list | `<list>` | no |
 | ranger_db_backup_retention | The days to retain backups for, for the rds metastore. | string | `7` | no |

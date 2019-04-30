@@ -85,7 +85,7 @@ resource "aws_rds_cluster_instance" "ranger_cluster_instance" {
 
 resource "aws_route53_record" "ranger_database" {
   zone_id = "${data.aws_route53_zone.ranger_zone.zone_id}"
-  name    = "ranger-database"
+  name    = "${var.ranger_database_host}"
   type    = "CNAME"
   ttl     = "60"
   records = ["${aws_rds_cluster.ranger_cluster.endpoint}"]

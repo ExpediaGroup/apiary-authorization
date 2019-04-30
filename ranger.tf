@@ -112,7 +112,7 @@ resource "aws_lb" "ranger_admin_lb" {
 
 resource "aws_route53_record" "ranger_admin" {
   zone_id = "${data.aws_route53_zone.ranger_zone.zone_id}"
-  name    = "ranger-admin"
+  name    = "${var.ranger_admin_host}"
   type    = "A"
 
   alias {

@@ -4,7 +4,7 @@ data "aws_vpc" "apiary_vpc" {
 
 data "aws_route53_zone" "ranger_zone" {
   name   = "${var.ranger_domain_name}"
-  vpc_id = "${var.vpc_id}"
+  private_zone = true
 }
 
 data "aws_secretsmanager_secret" "docker_registry" {

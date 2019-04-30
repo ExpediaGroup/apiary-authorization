@@ -14,7 +14,7 @@ data "template_file" "ranger_admin" {
   {
     "name": "ranger-admin",
     "image": "${var.ranger_docker_image}:${var.ranger_docker_version}",
-    "${local.docker_auth}"
+    ${local.docker_auth}
     "command": [ "/start-ranger-admin.sh" ],
     "essential": true,
     "logConfiguration": {
@@ -100,7 +100,7 @@ data "template_file" "ranger_usersync" {
   {
     "name": "ranger-usersync",
     "image": "${var.ranger_docker_image}:${var.ranger_docker_version}",
-    "${local.docker_auth}"
+    ${local.docker_auth}
     "command": [ "/start-ranger-usersync.sh" ],
     "essential": true,
     "logConfiguration": {
