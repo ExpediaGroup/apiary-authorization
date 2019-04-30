@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## Unreleased
+
+### Added
+- Support for user-specified CNAME for ranger admin and ranger database
+  hosts - see
+  [#15](https://github.com/ExpediaGroup/apiary-authorization/issues/15)
+
 ## [2.1.0] - 2019-04-03
 
 ### Added
