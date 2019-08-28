@@ -30,23 +30,35 @@ resource "aws_secretsmanager_secret_version" "db_audit_user_user" {
 }
 
 resource "random_string" "ranger_admin_password" {
-  length  = 16
-  special = false
+  length      = 16
+  min_lower   = 1
+  min_upper   = 1
+  min_numeric = 1
+  special     = false
 }
 
 resource "random_string" "ranger_tagsync_password" {
-  length  = 16
-  special = false
+  length      = 16
+  min_lower   = 1
+  min_upper   = 1
+  min_numeric = 1
+  special     = false
 }
 
 resource "random_string" "ranger_usersync_password" {
-  length  = 16
-  special = false
+  length      = 16
+  min_lower   = 1
+  min_upper   = 1
+  min_numeric = 1
+  special     = false
 }
 
 resource "random_string" "keyadmin_password" {
-  length  = 16
-  special = false
+  length      = 16
+  min_lower   = 1
+  min_upper   = 1
+  min_numeric = 1
+  special     = false
 }
 
 resource "aws_secretsmanager_secret" "ranger_admin" {
