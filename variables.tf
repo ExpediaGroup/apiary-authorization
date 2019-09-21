@@ -4,6 +4,43 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
+
+variable "ranger_instance_type" {
+  description = "Ranger instance type, possible values: ecs,ec2."
+  type        = "string"
+  default     = "ecs"
+}
+
+variable "ami_id" {
+  description = "Amazon Linux AMI, when using ec2 instance type for Ranger."
+  type        = "string"
+  default     = ""
+}
+
+variable "root_vol_type" {
+  description = "Ranger root volume type."
+  type        = "string"
+  default     = "gp2"
+}
+
+variable "root_vol_size" {
+  description = "Ranger root volume size."
+  type        = "string"
+  default     = "10"
+}
+
+variable "ec2_instance_type" {
+  description = "Ranger EC2 instance type."
+  type        = "string"
+  default     = "m5.large"
+}
+
+variable "key_name" {
+  description = "EC2 key pair name."
+  type        = "string"
+  default     = "automation"
+}
+
 variable "apiary_tags" {
   description = "Common tags that get put on all resources"
   type        = "map"
@@ -25,7 +62,6 @@ variable "ranger_admin_host" {
   type        = "string"
   default     = "ranger-admin"
 }
-
 
 variable "vpc_id" {
   description = "VPC id"

@@ -1,0 +1,130 @@
+- hosts: all
+  become: true
+
+  vars:
+    aws_region: "${aws_region}"
+    aws_loggroup: "${aws_loggroup}"
+    heapsize: "${heapsize}"
+    loglevel: "${loglevel}"
+    db_host: "${db_host}"
+    db_name: "${db_name}"
+    db_master_user_arn: "${db_master_user_arn}"
+    db_audit_user_arn: "${db_audit_user_arn}"
+    ranger_admin_arn: "${ranger_admin_arn}"
+    ldap_user_arn: "${ldap_user_arn}"
+    xa_ldap_ad_url: "${xa_ldap_ad_url}"
+    audit_solr_urls: "${audit_solr_urls}"
+    xa_ldap_ad_base_dn: "${xa_ldap_ad_base_dn}"
+    xa_ldap_ad_domain: "${xa_ldap_ad_domain}"
+    ldap_ca_cert: "${ldap_ca_cert}"
+    docker_registry_url: "${docker_registry_url}"
+    docker_registry_username: "${docker_registry_username}"
+    docker_registry_password: "${docker_registry_password}"
+    docker_image_name: "${docker_image_name}"
+    docker_image_version: "${docker_image_version}"
+    ranger_container_mode: "${ranger_container_mode}"
+
+  tasks:
+    - name: Install Linux packages
+      yum:
+        name:
+          - docker
+          - wget
+          - unzip
+          - jq
+          - htop
+          - telnet
+          - nc
+          - awslogs
+        state: present
+
+    - name: Install Python modules
+      pip:
+        name:
+          - docker
+        state: present
+
+    - name: Start awslogsd service
+      service:
+        name: awslogsd
+        enabled: yes
+        state: started
+
+    - name: Start docker service
+      service:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Login to Docker registry
+      docker_login:
+        registry: "{{ docker_registry_url }}"
+        username: "{{ docker_registry_username }}"
+        password: "{{ docker_registry_password }}"
+        reauthorize: yes
+
+    - name: Start Ranger Admin docker container
+      docker_container:
+        name: ranger_admin
+        image: "{{ docker_registry_url }}/{{ docker_image_name }}:{{ docker_image_version }}"
+        ports:
+          - "6080:6080"
+        state: started
+        restart: yes
+        restart_policy: unless-stopped
+        command: "/start-ranger-admin.sh"
+        log_driver: awslogs
+        log_options:
+          awslogs-region: "{{ aws_region }}"
+          awslogs-group: "{{ aws_loggroup }}"
+          awslogs-create-group: "true"
+          tag: "//ranger-{{ ranger_container_mode }}/{% raw %}{{.ID}}{% endraw %}"
+        env:
+          HEAPSIZE: "{{ heapsize }}"
+          AWS_REGION: "{{ aws_region }}"
+          AWS_DEFAULT_REGION: "{{ aws_region }}"
+          LOGLEVEL: "{{ loglevel }}"
+          db_host: "{{ db_host }}"
+          db_name: "{{ db_name }}"
+          db_master_user_arn: "{{ db_master_user_arn }}"
+          db_audit_user_arn: "{{ db_audit_user_arn }}"
+          ranger_admin_arn: "{{ ranger_admin_arn }}"
+          ldap_user_arn: "{{ ldap_user_arn }}"
+          xa_ldap_ad_url: "{{ xa_ldap_ad_url }}"
+          audit_solr_urls: "{{ audit_solr_urls }}"
+          xa_ldap_ad_base_dn: "{{ xa_ldap_ad_base_dn }}"
+          xa_ldap_ad_domain: "{{ xa_ldap_ad_domain }}"
+          ldap_ca_cert: "{{ ldap_ca_cert }}"
+      when: ranger_container_mode == "admin"
+
+    - name: Start Ranger Usersync docker container
+      docker_container:
+        name: ranger_usersync
+        image: "{{ docker_registry_url }}/{{ docker_image_name }}:{{ docker_image_version }}"
+        state: started
+        restart: yes
+        restart_policy: unless-stopped
+        command: "/start-ranger-usersync.sh"
+        log_driver: awslogs
+        log_options:
+          awslogs-region: "{{ aws_region }}"
+          awslogs-group: "{{ aws_loggroup }}"
+          awslogs-create-group: "true"
+          tag: "//ranger-{{ ranger_container_mode }}/{% raw %}{{.ID}}{% endraw %}"
+        env:
+          HEAPSIZE: "{{ heapsize }}"
+          AWS_REGION: "{{ aws_region }}"
+          AWS_DEFAULT_REGION: "{{ aws_region }}"
+          LOGLEVEL: "{{ loglevel }}"
+          db_host: "{{ db_host }}"
+          db_name: "{{ db_name }}"
+          db_master_user_arn: "{{ db_master_user_arn }}"
+          db_audit_user_arn: "{{ db_audit_user_arn }}"
+          ranger_admin_arn: "{{ ranger_admin_arn }}"
+          ldap_user_arn: "{{ ldap_user_arn }}"
+          xa_ldap_ad_url: "{{ xa_ldap_ad_url }}"
+          audit_solr_urls: "{{ audit_solr_urls }}"
+          xa_ldap_ad_base_dn: "{{ xa_ldap_ad_base_dn }}"
+          xa_ldap_ad_domain: "{{ xa_ldap_ad_domain }}"
+          ldap_ca_cert: "{{ ldap_ca_cert }}"
+      when: ranger_container_mode == "usersync"
