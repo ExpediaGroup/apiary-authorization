@@ -217,3 +217,21 @@ variable "docker_registry_auth_secret_name" {
   type        = "string"
   default     = ""
 }
+
+variable "rds_family" {
+  description = "RDS family"
+  type        = "string"
+  default     = "aurora-mysql5.7"
+}
+
+variable "rds_engine" {
+  description = "RDS engine version"
+  type        = "string"
+  default     = "aurora-mysql"
+}
+
+variable "rds_max_allowed_packet" {
+  description = "RDS/MySQL setting for parameter 'max_allowed_packet' in bytes. Default is 128MB (Note that MySQL default is 4MB)."
+  type        = "string"
+  default     = "134217728"
+}
