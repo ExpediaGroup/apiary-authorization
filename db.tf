@@ -40,6 +40,22 @@ resource "aws_security_group" "ranger_db" {
   }
 }
 
+resource "aws_rds_cluster_parameter_group" "ranger_rds_param_group" {
+  name        = "ranger-cluster-param-group"
+  family      = "${var.rds_family}" # Needs to be kept in sync with aws_rds_cluster.apiary_cluster.engine and version
+  description = "Ranger-specific Aurora parameters"
+  tags        = "${merge(map("Name", "ranger-cluster-param-group"), "${var.apiary_tags}")}"
+
+  parameter {
+    name  = "max_allowed_packet"
+    value = "${var.rds_max_allowed_packet}"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+
 resource "random_id" "snapshot_id" {
   byte_length = 8
 }
@@ -51,6 +67,7 @@ resource "random_string" "db_master_password" {
 
 resource "aws_rds_cluster" "ranger_cluster" {
   cluster_identifier                  = "ranger-cluster"
+  engine                              = "${var.rds_engine}"
   database_name                       = "${var.ranger_database_name}"
   master_username                     = "${var.db_master_username}"
   master_password                     = "${random_string.db_master_password.result}"
@@ -73,6 +90,7 @@ resource "aws_rds_cluster_instance" "ranger_cluster_instance" {
   count                = "${var.ranger_db_instance_count}"
   identifier           = "ranger-instance-${count.index}"
   cluster_identifier   = "${aws_rds_cluster.ranger_cluster.id}"
+  engine               = "${var.rds_engine}"
   instance_class       = "${var.ranger_db_instance_class}"
   db_subnet_group_name = "${aws_db_subnet_group.ranger.name}"
   publicly_accessible  = false
